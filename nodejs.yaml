@@ -1,0 +1,24 @@
+- name: install nodejs
+  hosts: all
+  become: yes
+  vars:
+  
+  tasks: 
+    - name: Install nodejs
+      ansible.builtin.apt:
+        name: 
+          - npm
+          - nodejs
+        state: present 
+- name: install nodejs on centos
+  hosts: all
+  become: yes
+  tasks:
+    - name: Enable Microsoft PPA
+      ansible.builtin.get_url:
+        url: -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+        dest: /tmp/    
+    - name: Install nodejs on centos
+      ansible.builtin.yum:
+        name: nodejs
+        state: latest

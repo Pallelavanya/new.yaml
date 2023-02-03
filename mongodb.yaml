@@ -1,0 +1,43 @@
+- name: ansible.builtin.get_url module
+  hosts: all
+  become: yes
+  tasks:
+    - name: Download foo.conf
+      ansible.builtin.get_url:
+        url: curl gnupg2 software-properties-common apt-transport-https ca-certificates lsb-release
+        dest: /tmp/
+        mode: '0440'
+    - name: ansible.builtin.apt module
+      ansible.builtin.apt:
+        name: gnupg
+        state: present 
+    - name: Download foo.conf
+      ansible.builtin.get_url:
+        cmd: curl -fsSL https://www.mongodb.org/static/pgp/server-6.0.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/mongodb-6.gpg
+        dest: /tmp/
+        mode: '0440'
+    - name: install mongodb-org
+      ansible.builtin.apt:
+        name: mongodb-org
+        state: present
+    - name: Download foo.conf
+      ansible.builtin.get_url:
+        url: http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb
+        dest: /tmp/
+        mode: '0440' 
+    - name: Start service mongodb+++
+      ansible.builtin.service:
+        name: mongodb
+        state: started
+       
+
+          
+
+
+
+
+
+
+
+
+        

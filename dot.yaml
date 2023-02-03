@@ -1,0 +1,31 @@
+- name: install dotnet
+  hosts: all
+  become: yes
+  tasks:
+    - name:  Enable Microsoft PPA
+      ansible.builtin.get_url:
+        url: https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb 
+        dest: /tmp/ 
+    - name: dpkg packages-microsoft-prod.deb
+      ansible.builtin.dpkg_selections:
+        name: -microsoft-prod.deb 
+        selection: install
+    - name: Install core SDK on ubuntu
+      ansible.builtin.apt:
+        name:
+          - apt-transport-https 
+          - dotnet-sdk-6.0 
+        state: present
+      
+- name: install dotnet on centos
+  hosts: all
+  become: yes
+  tasks:
+    - name:  Enable Microsoft PPA
+      ansible.builtin.get_url:
+        url: rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm
+        dest: /tmp/
+    - name: Install core SDK on ubuntu
+      ansible.builtin.yum:
+        name: dotnet-sdk-2.2
+        state: present     

@@ -1,0 +1,8 @@
+pool:
+  name: default
+trigger: 
+  - main  
+steps: 
+  - script: sudo apt update  
+  - script: sudo apt install openjdk-17-jdk -y
+   
